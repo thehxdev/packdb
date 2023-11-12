@@ -1,3 +1,9 @@
+/*
+ * File: keylist.c
+ * Desc: Implementation of functions defined in `keylist.h` file.
+ * Author: Hossein Khosravi
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,7 +13,7 @@
 #include "str.h"
 
 
-static KeyNode *keynode_new(const char *name) {
+KeyNode *keynode_new(const char *name) {
     KeyNode *kn = (KeyNode*) malloc(sizeof(KeyNode));
     if (!kn)
         return NULL;
@@ -23,7 +29,7 @@ static KeyNode *keynode_new(const char *name) {
 }
 
 
-static void keynode_free(KeyNode *knp) {
+void keynode_free(KeyNode *knp) {
     if (knp) {
         check_then_free(knp->name);
         free(knp);

@@ -1,3 +1,9 @@
+/*
+ * File: str.c
+ * Desc: Implementation of functions defined in `str.h` file.
+ * Author: Hossein Khosravi
+ */
+
 #include <stdlib.h>
 #include <string.h>
 
