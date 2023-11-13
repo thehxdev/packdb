@@ -18,17 +18,20 @@
 
 /**
  * TableNode used to store a key's value.
+ * (NOT USED YET)
  */
+#if 0
 typedef struct __table_node {
     void *value;
 } TableNode;
+#endif // TableNode
 
 
 /**
  * Main Hash-Table to store data of packdb
  */
 typedef struct __key_table {
-    TableNode *nodes[KEYTABLE_CAP];
+    char *vals[KEYTABLE_CAP];
     KeyList *keys_list;
     size_t nodes_count;
 } KeyTable;
@@ -49,5 +52,25 @@ KeyTable *keytable_new();
  * @ktp: pointer to a KeyTable
  */
 void keytable_free(KeyTable *ktp);
+
+
+/**
+ * Add a new key-value to KeyTable
+ *
+ * @ktp: pointer to a KeyTable
+ * @key: key string
+ * @val: value in string form
+ * ---
+ * @ret: 0 OK | 1 Error
+ */
+int keytable_add(KeyTable *ktp, const char *key, const char *val);
+
+
+/**
+ * Print a KeyTable elements to stdout recursively
+ *
+ * @ktp: pointer to a KeyTable
+ */
+void keytable_print(KeyTable *ktp);
 
 #endif // KEYTABLE_H

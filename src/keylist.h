@@ -15,7 +15,7 @@ typedef struct __key_node {
     char *name;
     struct __key_node *next;
     struct __key_node *prev;
-} KeyNode;
+} KeyListNode;
 
 
 /**
@@ -27,28 +27,28 @@ typedef struct __key_node {
  *   3. Don't lose head and tail pointers
  */
 typedef struct __key_list {
-    KeyNode *head;
-    KeyNode *tail;
+    KeyListNode *head;
+    KeyListNode *tail;
 } KeyList;
 
 
 /**
  * @WARN!
- * Create a new KeyNode instance
+ * Create a new KeyListNode instance
  *
  * @name: key string
  * ---
- * @ret: pointer to a new KeyNode | NULL
+ * @ret: pointer to a new KeyListNode | NULL
  */
-KeyNode *keynode_new(const char *s);
+KeyListNode *KeyListNode_new(const char *s);
 
 
 /**
- * Free a KeyNode from memory recursively 
+ * Free a KeyListNode from memory recursively 
  *
- * @knp: pointer to a KeyNode
+ * @knp: pointer to a KeyListNode
  */
-void keynode_free(KeyNode *knp);
+void KeyListNode_free(KeyListNode *knp);
 
 
 /**
@@ -74,9 +74,20 @@ void keylist_free(KeyList *klp);
  * @klp: pointer to a KeyList instance
  * @s: key string
  * ---
- * @ret: 0 OK | 1 Error
+ * @ret: 0 Ok | 1 Error
  */
 int keylist_append(KeyList *klp, const char *s);
+
+
+/**
+ * Delete a key from KeyList
+ *
+ * @klp: pointer to a KeyList
+ * @key: key string
+ * ---
+ * @ret: 0 Ok | 1 Error
+ */
+int keylist_delete(KeyList *klp, const char *key);
 
 
 /**

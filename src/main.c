@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-#include "keylist.h"
+#include "keytable.h"
 #include "general.h"
 
 
@@ -16,21 +16,19 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    KeyList *kl = keylist_new();
-    if (is_null(kl)) {
-        fprintf(stderr, "[ERROR] Cannot initialize keylist.\n");
+    KeyTable *kt = keytable_new();
+    if (is_null(kt)) {
+        fprintf(stderr, "[ERROR] Could not initialize KeyTable.\n");
         return 1;
     }
 
     /*
-     * Testing KeyList
-     * Storing command-line arguments in a KeyList
-     * and print them in list form.
+     * Testing KeyTable
      */
     for (int i = 1; i < argc; i++)
-        keylist_append(kl, argv[i]);
-    keylist_print(kl);
+        keytable_add(kt, argv[i], "1");
+    keytable_print(kt);
 
-    keylist_free(kl);
+    keytable_free(kt);
     return 0;
 }
