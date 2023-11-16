@@ -8,17 +8,16 @@
 #define STR_H
 
 
-/**
- * `strdup` is not a standard C functoin, so if the program
- * compiles with ANSI C compiler (Not GNU) this functoin must
- * be manually written.
- */
 #if !defined (_DEFAULT_SOURCE) \
     || !defined (__USE_XOPEN_EXTENDED) \
     || _XOPEN_SOURCE < 500 \
     || _POSIX_C_SOURCE < 200809L
 /**
  * Duplicate and return exact same malloc'd string.
+ *
+ * `strdup` is not a standard C functoin, so if the program
+ * compiles with ANSI C compiler (Not GNU) this functoin must
+ * be manually written.
  *
  * @s: source string.
  * ---
