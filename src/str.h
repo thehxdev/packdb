@@ -18,7 +18,6 @@
     || _XOPEN_SOURCE < 500 \
     || _POSIX_C_SOURCE < 200809L
 /**
- * @WARN!
  * Duplicate and return exact same malloc'd string.
  *
  * @s: source string.

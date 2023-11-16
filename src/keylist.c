@@ -13,7 +13,7 @@
 #include "str.h"
 
 
-KeyListNode *KeyListNode_new(const char *name) {
+KeyListNode *keylistnode_new(const char *name) {
     KeyListNode *kn = (KeyListNode*) malloc(sizeof(KeyListNode));
     if (!kn)
         return NULL;
@@ -29,7 +29,7 @@ KeyListNode *KeyListNode_new(const char *name) {
 }
 
 
-void KeyListNode_free(KeyListNode *knp) {
+void keylistnode_free(KeyListNode *knp) {
     if (knp) {
         check_then_free(knp->name);
         free(knp);
@@ -52,7 +52,7 @@ KeyList *keylist_new() {
 static void keylist_free_helper(KeyListNode *node) {
     if (node != NULL) {
         keylist_free_helper(node->next);
-        KeyListNode_free(node);
+        keylistnode_free(node);
     }
 }
 
@@ -69,7 +69,7 @@ int keylist_append(KeyList *klp, const char *name) {
     if (is_null(klp) || is_null(name))
         return 1;
 
-    KeyListNode *kn = KeyListNode_new(name);
+    KeyListNode *kn = keylistnode_new(name);
     if (is_null(klp->head)) {
         klp->head = klp->tail = kn;
         return 0;
@@ -96,5 +96,44 @@ void keylist_print(KeyList *klp) {
 }
 
 
-// TODO: Implement keylist_delete
-int keylist_delete(KeyList *klp, const char *key);
+KeyListNode *keylist_find(KeyList *klp, const char *key) {
+    if (is_null(klp) || is_null(key))
+        return NULL;
+
+    KeyListNode *tmp = klp->head;
+    while (tmp) {
+        if (strcmp(tmp->name, key) == 0)
+            return tmp;
+        tmp = tmp->next;
+    }
+
+    return tmp;
+}
+
+
+int keylist_delete(KeyList *klp, const char *key) {
+    if (is_null(klp) || is_null(key))
+        return 1;
+
+    KeyListNode *tmp = keylist_find(klp, key);
+    if (is_null(tmp))
+        return 1;
+
+    KeyListNode *before = tmp->prev;
+    KeyListNode *after  = tmp->next;
+
+    if (is_null(before)) {
+        klp->head = after;
+    } else {
+        before->next = after;
+    }
+
+    if (is_null(after)) {
+        klp->tail = before;
+    } else {
+        after->prev = before;
+    }
+
+    keylistnode_free(tmp);
+    return 0;
+}

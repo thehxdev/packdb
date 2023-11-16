@@ -38,10 +38,9 @@ typedef struct __key_table {
 
 
 /**
- * @WARN!
  * Create a new KeyTable instance
  * ---
- * @ret: pointer to new KeyTable | NULl
+ * @ret: pointer to new KeyTable | NULL
  */
 KeyTable *keytable_new();
 
@@ -64,6 +63,18 @@ void keytable_free(KeyTable *ktp);
  * @ret: 0 OK | 1 Error
  */
 int keytable_add(KeyTable *ktp, const char *key, const char *val);
+
+
+// TODO: Implement keytable_delete
+/**
+ * Delete an existing key-value from KeyTable
+ *
+ * @ktp: pointer to a KeyTable
+ * @key: key string
+ * ---
+ * @ret: 0 OK | 1 Error
+ */
+int keytable_delete(KeyTable *ktp, const char *key);
 
 
 /**

@@ -11,10 +11,10 @@
  * Node of a double linked-list that holds
  * name of keys in hash-table (keytable)
  */
-typedef struct __key_node {
+typedef struct __key_list_node {
     char *name;
-    struct __key_node *next;
-    struct __key_node *prev;
+    struct __key_list_node *next;
+    struct __key_list_node *prev;
 } KeyListNode;
 
 
@@ -33,14 +33,13 @@ typedef struct __key_list {
 
 
 /**
- * @WARN!
  * Create a new KeyListNode instance
  *
  * @name: key string
  * ---
  * @ret: pointer to a new KeyListNode | NULL
  */
-KeyListNode *KeyListNode_new(const char *s);
+KeyListNode *keylistnode_new(const char *s);
 
 
 /**
@@ -48,11 +47,10 @@ KeyListNode *KeyListNode_new(const char *s);
  *
  * @knp: pointer to a KeyListNode
  */
-void KeyListNode_free(KeyListNode *knp);
+void keylistnode_free(KeyListNode *knp);
 
 
 /**
- * @WARN!
  * Create a new KeyList instance
  * ---
  * @ret: pointer to a new KeyList | NULL
@@ -77,6 +75,17 @@ void keylist_free(KeyList *klp);
  * @ret: 0 Ok | 1 Error
  */
 int keylist_append(KeyList *klp, const char *s);
+
+
+/**
+ * Find a specific key in KeyList
+ *
+ * @klp: pointer to a KeyList
+ * @key: key string
+ * ---
+ * @ret: pointer to a KeyListNode | NULL
+ */
+KeyListNode *keylist_find(KeyList *klp, const char *key);
 
 
 /**

@@ -58,7 +58,7 @@ static void keytable_free_helper(char **vals, KeyListNode *knp) {
 
         unsigned int hash = calc_hash(knp->name);
         check_then_free(vals[hash]);
-        KeyListNode_free(knp);
+        keylistnode_free(knp);
     }
 }
 
@@ -82,9 +82,7 @@ int keytable_add(KeyTable *ktp, const char *key, const char *val) {
     unsigned int hash = calc_hash(key);
     ktp->vals[hash] = strdup(val);
     if (is_null(ktp->vals[hash])) {
-        // TODO: Implement keylist_delete function
-        //
-        // keylist_delete(ktp->keys_list, key);
+        keylist_delete(ktp->keys_list, key);
         return 1;
     }
 
@@ -94,9 +92,9 @@ int keytable_add(KeyTable *ktp, const char *key, const char *val) {
 
 static void keytable_print_helper(char **vals, KeyListNode *knp) {
     if (knp) {
-        keytable_print_helper(vals, knp->next);
         unsigned int hash = calc_hash(knp->name);
         printf("%s\t->\t%s\n", knp->name, vals[hash]);
+        keytable_print_helper(vals, knp->next);
     }
 }
 
