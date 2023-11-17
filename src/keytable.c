@@ -21,13 +21,13 @@
  * ---
  * @ret: index in value's list
  */
-static unsigned int calc_hash(const char *key) {
+static unsigned long calc_hash(const char *key) {
     unsigned int alphabet_size = 36; // a - z & 0 - 9
-    unsigned int key_len = strlen(key);
-    unsigned int alpha = alphabet_size ^ key_len;
+    unsigned long key_len = strlen(key);
+    unsigned long alpha = alphabet_size ^ key_len;
 
-    unsigned num = 0;
-    for (unsigned int i = 0; i < key_len; i++)
+    unsigned long num = 0;
+    for (unsigned long i = 0; i < key_len; i++)
         num = ((alphabet_size * (key_len + key[i])) * key[i]) % KEYTABLE_CAP;
 
     return (alpha + num + key_len) % KEYTABLE_CAP;
@@ -56,7 +56,7 @@ static void keytable_free_helper(char **vals, KeyListNode *knp) {
     if (knp) {
         keytable_free_helper(vals, knp->next);
 
-        unsigned int hash = calc_hash(knp->name);
+        unsigned long hash = calc_hash(knp->name);
         check_then_free(vals[hash]);
         keylistnode_free(knp);
     }
@@ -79,7 +79,7 @@ int keytable_add(KeyTable *ktp, const char *key, const char *val) {
     if (err == 1)
         return 1;
 
-    unsigned int hash = calc_hash(key);
+    unsigned long hash = calc_hash(key);
     ktp->vals[hash] = strdup(val);
     if (is_null(ktp->vals[hash])) {
         keylist_delete(ktp->keys_list, key);
@@ -92,7 +92,7 @@ int keytable_add(KeyTable *ktp, const char *key, const char *val) {
 
 static void keytable_print_helper(char **vals, KeyListNode *knp) {
     if (knp) {
-        unsigned int hash = calc_hash(knp->name);
+        unsigned long hash = calc_hash(knp->name);
         printf("%s\t->\t%s\n", knp->name, vals[hash]);
         keytable_print_helper(vals, knp->next);
     }
