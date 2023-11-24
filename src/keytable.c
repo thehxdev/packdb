@@ -91,13 +91,33 @@ int keytable_add(KeyTable *ktp, const char *key, const char *val) {
 
 
 static void keytable_print_helper(char **vals, KeyListNode *knp) {
-    if (knp) {
+    if (knp && vals) {
         unsigned long hash = calc_hash(knp->name);
-        printf("%s\t->\t%s\n", knp->name, vals[hash]);
+        if (vals[hash])
+            printf("%s\t->\t%s\n", knp->name, vals[hash]);
+        else
+            printf("%s\t->\tNULL\n", knp->name);
         keytable_print_helper(vals, knp->next);
     }
 }
 
+
 void keytable_print(KeyTable *ktp) {
     keytable_print_helper(ktp->vals, ktp->keys_list->head);
+}
+
+
+int keytable_delete(KeyTable *ktp, const char *key) {
+    if (is_null(ktp) || is_null(key))
+        return 1;
+
+    int err;
+    unsigned int hash = calc_hash(key);
+
+    err = keylist_delete(ktp->keys_list, key);
+    if (!err)
+        return 1;
+
+    check_then_free(ktp->vals[hash]);
+    return 0;
 }

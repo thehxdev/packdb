@@ -65,7 +65,6 @@ void keytable_free(KeyTable *ktp);
 int keytable_add(KeyTable *ktp, const char *key, const char *val);
 
 
-// TODO: Implement keytable_delete
 /**
  * Delete an existing key-value from KeyTable
  *
