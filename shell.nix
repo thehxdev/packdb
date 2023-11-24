@@ -6,7 +6,6 @@
         gnumake
         gdb
         ccls
-        #valgrind
-        #radare2
+        valgrind
     ];
 }
